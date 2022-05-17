@@ -127,7 +127,7 @@ public class DrawController : MonoBehaviour
             Outline outline = currentLastChild.GetComponent<Outline>();
             if (outline != null)
             {
-                outline.effectColor = Color.clear;
+                outline.effectColor = Color.black;
             }
         }
 

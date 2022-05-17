@@ -236,7 +236,7 @@ public class SettingsManager : MonoBehaviour
      */
     public bool CanRefreshDeck(Text deckRefreshText)
     {
-        if (isLimitDeckRefresh && (currentDeckRefreshesLeft < 1)) return false;
+        if (!isLimitDeckRefresh || (isLimitDeckRefresh && (currentDeckRefreshesLeft < 1))) return false;
 
         currentDeckRefreshesLeft--;
 
@@ -330,6 +330,7 @@ public class SettingsManager : MonoBehaviour
      */
     public void UndoRefreshDeck(Text deckRefreshText)
     {
+        if (!isLimitDeckRefresh) return;
         currentDeckRefreshesLeft++;
         if (deckRefreshText != null) deckRefreshText.text = "" + currentDeckRefreshesLeft;
     }
