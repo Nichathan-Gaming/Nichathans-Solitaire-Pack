@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/MainMenuScene.unity
+    guid: 32c36f3d044192749aa5d13b953c3777
+  - enabled: 1
+    path: Assets/Scenes/Klondike.unity
+    guid: 6f4839a908055b94ea5fd46e2daa3fb5
+  - enabled: 1
+    path: Assets/Scenes/Pyramid.unity
+    guid: bdf5be989c173c141b32b2d015d2b261
+  - enabled: 1
+    path: Assets/Scenes/TriPeaks.unity
+    guid: 7eb3efde495ca5342a49ba87f40d3721
+  - enabled: 1
+    path: Assets/Scenes/FreeCell.unity
+    guid: 6453cd7106569c445924dcebe18830a6
+  - enabled: 1
+    path: Assets/Scenes/BlackWar.unity
+    guid: 5154491e62b1a5a4e9a42ed303bdbf3a
+  - enabled: 1
+    path: Assets/Scenes/Spider.unity
+    guid: 8194b0167345bd04b881b48792baab23
+  m_configObjects: {}
