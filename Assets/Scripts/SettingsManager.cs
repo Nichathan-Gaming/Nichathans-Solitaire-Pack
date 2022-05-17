@@ -396,6 +396,11 @@ public class SettingsManager : MonoBehaviour
         Application.Quit();
     }
 
+    public void ViewCredits()
+    {
+        SceneManager.LoadScene("Credits");
+    }
+
     /**
      * Attempts to load the scene with sceneName
      */
