@@ -96,7 +96,6 @@ public class BlackWarController : MonoBehaviour
         startButton.SetActive(true);
 
         SettingsManager.RESET = ResetGame;
-        SettingsManager.UNDO = Undo;
 
         stopWatch.StartStopWatch(SetTime);
     }
@@ -110,12 +109,6 @@ public class BlackWarController : MonoBehaviour
     void ResetGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
-    bool Undo()
-    {
-        SettingsManager.instance.SetNotification("BlackWar does not allow players to undo moves.");
-        return false;
     }
 
     /**

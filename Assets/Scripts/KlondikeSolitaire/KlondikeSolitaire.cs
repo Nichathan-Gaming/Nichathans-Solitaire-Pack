@@ -785,6 +785,14 @@ public class KlondikeSolitaire : MonoBehaviour
     }
 
     /**
+     * Runs the undo move
+     */
+    public void RunUndo()
+    {
+        SettingsManager.instance.UndoMove();
+    }
+
+    /**
      * undoes one of the moves saved in the history stack
      */
     public bool Undo()

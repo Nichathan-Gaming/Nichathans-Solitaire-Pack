@@ -1031,6 +1031,14 @@ public class TriPeaksController : MonoBehaviour // TOP: 15, 21, 27
     }
 
     /**
+     * Runs the undo move
+     */
+    public void RunUndo()
+    {
+        SettingsManager.instance.UndoMove();
+    }
+
+    /**
      * Undo 1 move
      */
     public bool Undo()

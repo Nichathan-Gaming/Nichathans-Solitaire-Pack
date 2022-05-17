@@ -132,6 +132,14 @@ public class FreeCellManager : MonoBehaviour
     }
 
     /**
+     * Runs the undo move
+     */
+    public void RunUndo()
+    {
+        SettingsManager.instance.UndoMove();
+    }
+
+    /**
      * Change the display of the timer
      * 
      * This is a callback sent to StopWatch

@@ -907,6 +907,14 @@ public class PyramidGameController : MonoBehaviour
     }
 
     /**
+     * Runs the undo move
+     */
+    public void RunUndo()
+    {
+        SettingsManager.instance.UndoMove();
+    }
+
+    /**
      * Undo 1 move
      */
     public bool Undo()
