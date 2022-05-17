@@ -90,6 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a553fdd291880914e9364e029f9cfa44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  klondikeSolitaire: {fileID: 0}
   suit: 83
   number: 0
   isInAce: 0
@@ -99,7 +100,6 @@ MonoBehaviour:
   returnToPrevPos: 1
   baseLocations: {fileID: 0}
   tempParent: {fileID: 0}
-  test: {fileID: 4007979741255989762, guid: 3fdced19f8cfcb24fb7ab3627e1e3dee, type: 3}
 --- !u!225 &6787227810294342321
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -124,6 +124,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 1, a: 0}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 5, y: -5}
   m_UseGraphicAlpha: 1

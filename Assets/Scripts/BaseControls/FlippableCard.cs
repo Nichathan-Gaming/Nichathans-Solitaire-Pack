@@ -598,7 +598,7 @@ public class FlippableCard : MonoBehaviour, IPointerDownHandler, IBeginDragHandl
             Outline outline = parent.GetComponent<Outline>();
             if (outline != null)
             {
-                outline.effectColor = onOff?new Color(0, 0, 255, 127):Color.clear;
+                outline.effectColor = onOff?new Color(0, 0, 255, 127):Color.black;
             }
 
             parent = parent.childCount > 0 ? parent.GetChild(0) : null;

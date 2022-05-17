@@ -136,7 +136,7 @@ public class KlondikeSolitaire : MonoBehaviour
 
             if (outline != null)
             {
-                outline.effectColor = Color.clear;
+                outline.effectColor = Color.black;
             }
 
             lastClickedFlippableCard = null;
