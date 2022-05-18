@@ -561,6 +561,22 @@ public class SettingsManager : MonoBehaviour
     public void ToggleSettings()
     {
         mainSettings.SetActive(!mainSettings.activeInHierarchy);
+
+        //see if we have a timer
+        StopWatch stopWatch = FindObjectOfType<StopWatch>();
+
+        if(stopWatch != null)
+        {
+            //see if we should play/pause the timer
+            if (mainSettings.activeInHierarchy)
+            {
+                stopWatch.PauseStopWatch();
+            }
+            else
+            {
+                stopWatch.ResumeStopWatch();
+            }
+        }
     }
 
     /**
