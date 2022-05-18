@@ -50,6 +50,9 @@ public class SpiderController : MonoBehaviour
     // Normal raycasts do not work on UI elements, they require a special kind
     GraphicRaycaster raycaster;
 
+    [SerializeField] GameObject undoLimitTitle;
+    [SerializeField] Text undoLimitText;
+
     void Awake()
     {
         instance = this;
@@ -67,6 +70,8 @@ public class SpiderController : MonoBehaviour
         raycaster = GetComponent<GraphicRaycaster>();
 
         stopWatch.StartStopWatch(SetTime);
+
+        HandleUndo();
     }
 
     // Update is called once per frame
@@ -100,6 +105,15 @@ public class SpiderController : MonoBehaviour
         {
             AutoComplete();
         }
+    }
+
+    private void HandleUndo()
+    {
+        #region handle reset from setting changes
+        undoLimitTitle.SetActive(SettingsManager.instance.IsLimitUndo());
+        undoLimitText.gameObject.SetActive(SettingsManager.instance.IsLimitUndo());
+        undoLimitText.text = SettingsManager.instance.GetCurrentUndosLeft() + "";
+        #endregion handle reset from setting changes
     }
 
     /**

@@ -2671,6 +2671,8 @@ MonoBehaviour:
   deckHolder: {fileID: 1182397351}
   currentCardHolder: {fileID: 1856903470}
   currentCard: {fileID: 0}
+  undoLimitTitle: {fileID: 602208516}
+  undoLimitText: {fileID: 427832745}
 --- !u!1 &1362191882
 GameObject:
   m_ObjectHideFlags: 0

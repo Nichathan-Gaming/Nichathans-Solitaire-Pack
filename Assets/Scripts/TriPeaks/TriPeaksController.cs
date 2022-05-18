@@ -38,6 +38,9 @@ public class TriPeaksController : MonoBehaviour // TOP: 15, 21, 27
 
     private int playerScore = 0;
 
+    [SerializeField] GameObject undoLimitTitle;
+    [SerializeField] Text undoLimitText;
+
     //the list of our history used for undo
     private Stack<History> historiesList = new Stack<History>();
 
@@ -252,6 +255,17 @@ public class TriPeaksController : MonoBehaviour // TOP: 15, 21, 27
 
         SettingsManager.RESET = ResetGame;
         SettingsManager.UNDO = Undo;
+
+        HandleUndo();
+    }
+
+    private void HandleUndo()
+    {
+        #region handle reset from setting changes
+        undoLimitTitle.SetActive(SettingsManager.instance.IsLimitUndo());
+        undoLimitText.gameObject.SetActive(SettingsManager.instance.IsLimitUndo());
+        undoLimitText.text = SettingsManager.instance.GetCurrentUndosLeft() + "";
+        #endregion handle reset from setting changes
     }
 
     public void QuitGame()
@@ -285,6 +299,7 @@ public class TriPeaksController : MonoBehaviour // TOP: 15, 21, 27
         }
 
         AssignCards();
+        HandleUndo();
     }
 
     public void OpenSettings()

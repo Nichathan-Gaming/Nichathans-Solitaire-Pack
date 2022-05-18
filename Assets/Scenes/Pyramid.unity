@@ -1579,6 +1579,8 @@ MonoBehaviour:
   scoreText: {fileID: 881044072}
   stopWatch: {fileID: 1097169345}
   timerText: {fileID: 94514780}
+  undoLimitTitle: {fileID: 1050535135}
+  undoLimitText: {fileID: 785588305}
 --- !u!114 &1097169345
 MonoBehaviour:
   m_ObjectHideFlags: 0

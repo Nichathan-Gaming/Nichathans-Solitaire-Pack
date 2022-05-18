@@ -92,6 +92,8 @@ public class FreeCellManager : MonoBehaviour
         StartGame();
 
         stopWatch.StartStopWatch(SetTime);
+
+        HandleUndo();
     }
 
     // Update is called once per frame
@@ -129,6 +131,15 @@ public class FreeCellManager : MonoBehaviour
         {
             AutoComplete();
         }
+    }
+
+    private void HandleUndo()
+    {
+        #region handle reset from setting changes
+        undoLimitTitle.SetActive(SettingsManager.instance.IsLimitUndo());
+        undoLimitText.gameObject.SetActive(SettingsManager.instance.IsLimitUndo());
+        undoLimitText.text = SettingsManager.instance.GetCurrentUndosLeft() + "";
+        #endregion handle reset from setting changes
     }
 
     /**
@@ -182,6 +193,8 @@ public class FreeCellManager : MonoBehaviour
         AssignCards();
         SettingsManager.instance.SetIsGameActive(true);
         isMoving = false;
+
+        HandleUndo();
     }
 
     /**

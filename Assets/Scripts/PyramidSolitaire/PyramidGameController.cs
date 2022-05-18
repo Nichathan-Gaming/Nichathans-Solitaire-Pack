@@ -78,6 +78,9 @@ public class PyramidGameController : MonoBehaviour
 
     //the list of our history used for undo
     private Stack<History> historiesList = new Stack<History>();
+
+    [SerializeField] GameObject undoLimitTitle;
+    [SerializeField] Text undoLimitText;
     #endregion variables
 
     #region default Unity methods
@@ -155,6 +158,8 @@ public class PyramidGameController : MonoBehaviour
 
         //move the cards into their positions
         AssignCards();
+
+        HandleUndo();
     }
 
     // Update is called once per frame
@@ -236,6 +241,15 @@ public class PyramidGameController : MonoBehaviour
     }
     #endregion default Unity methods
 
+    private void HandleUndo()
+    {
+        #region handle reset from setting changes
+        undoLimitTitle.SetActive(SettingsManager.instance.IsLimitUndo());
+        undoLimitText.gameObject.SetActive(SettingsManager.instance.IsLimitUndo());
+        undoLimitText.text = SettingsManager.instance.GetCurrentUndosLeft() + "";
+        #endregion handle reset from setting changes
+    }
+
     /**
      * Resets the game
      */
@@ -283,6 +297,8 @@ public class PyramidGameController : MonoBehaviour
 
         //clear history
         historiesList.Clear();
+
+        HandleUndo();
     }
 
     /**
