@@ -110,6 +110,10 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] Image limitUndoSwitch;
     #endregion switches
 
+    #region BlackWar Variables
+    [SerializeField] GameObject blackWarSettings;
+    #endregion BlackWar Variables
+
     private void Awake()
     {
         if (instance == null)
@@ -837,4 +841,17 @@ public class SettingsManager : MonoBehaviour
         }
     }
     #endregion Sound Section
+
+    #region BlackWarStarter
+    public void ToggleBlackWarOpener()
+    {
+        blackWarSettings.SetActive(!blackWarSettings.activeInHierarchy);
+    }
+
+    public void BlackWarButton(int i)
+    {
+        BlackWarController.numberOfPlayers = i+2;
+        LoadScene("BlackWar");
+    }
+    #endregion BlackWarStarter
 }

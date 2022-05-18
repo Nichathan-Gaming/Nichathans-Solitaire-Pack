@@ -53,7 +53,7 @@ public class BlackWarController : MonoBehaviour
     [SerializeField] Text[] playerInfoText;
 
     [Header("The total number of players")]
-    [SerializeField] int numberOfPlayers=4;
+    static public int numberOfPlayers;
 
     [Header("Turn these off or on for the players")]
     [SerializeField] GameObject[] playerDisplayArea;
@@ -98,6 +98,7 @@ public class BlackWarController : MonoBehaviour
         SettingsManager.RESET = ResetGame;
 
         stopWatch.StartStopWatch(SetTime);
+        print(numberOfPlayers);
     }
 
     // Update is called once per frame
