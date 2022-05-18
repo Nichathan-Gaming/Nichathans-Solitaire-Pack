@@ -98,7 +98,11 @@ public class BlackWarController : MonoBehaviour
         SettingsManager.RESET = ResetGame;
 
         stopWatch.StartStopWatch(SetTime);
-        print(numberOfPlayers);
+
+        for(int i = numberOfPlayers; i < 4; i++)
+        {
+            playerDisplayArea[i].SetActive(false);
+        }
     }
 
     // Update is called once per frame
