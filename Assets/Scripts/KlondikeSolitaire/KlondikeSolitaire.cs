@@ -64,7 +64,8 @@ public class KlondikeSolitaire : MonoBehaviour
     private StopWatch stopWatch;
 
     //The text to show players their scores
-    private Text timerText, movesText;
+    [SerializeField] Text timerText;
+    [SerializeField] Text movesText;
     #endregion private variables
 
     #region Unity Default Override
@@ -80,10 +81,6 @@ public class KlondikeSolitaire : MonoBehaviour
         drawnCardHolder = GameObject.Find("DrawnCardHolder");
 
         stopWatch = transform.GetComponent<StopWatch>();
-
-        timerText = GameObject.Find("TimerText").GetComponent<Text>();
-
-        movesText = GameObject.Find("MovesText").GetComponent<Text>();
 
         SettingsManager.RESET = ResetGame;
         SettingsManager.UNDO = Undo;
