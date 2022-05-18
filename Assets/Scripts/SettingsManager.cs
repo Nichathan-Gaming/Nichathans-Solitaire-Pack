@@ -410,60 +410,91 @@ public class SettingsManager : MonoBehaviour
      */
     public void LoadScene(string sceneName)
     {
-        if (sceneName.Equals("Klondike"))
-        {
-            foreach (GameObject go in extraSettingsButtons)
-            {
-                go.SetActive(true);
-            }
-        }
-        else if (sceneName.Equals("FreeCell"))
-        {
-            extraSettingsButtons[0].SetActive(false);
-            extraSettingsButtons[1].SetActive(false);
-            extraSettingsButtons[2].SetActive(true);
-            extraSettingsButtons[3].SetActive(true);
-        }
-        else
-        {
-            extraSettingsButtons[0].SetActive(false);
-            extraSettingsButtons[1].SetActive(false);
-            extraSettingsButtons[2].SetActive(false);
-            extraSettingsButtons[3].SetActive(false);
-        }
+        extraSettingsButtons[0].SetActive(false);
+        extraSettingsButtons[1].SetActive(false);
 
         switch (sceneName)
         {
             case "Klondike":
+                #region Klondike
                 extraSettingsButtonTimeFormat.SetActive(true);
+                extraSettingsButtons[0].SetActive(true);
+                extraSettingsButtons[1].SetActive(true);
+
+                //countUndo moves
+                extraSettingsButtons[2].SetActive(true);
+
+                //limitUndo
+                extraSettingsButtons[3].SetActive(true);
 
                 rulesText.text = KLONDIKE_RULES;
                 break;
+                #endregion Klondike
             case "Pyramid":
+                #region Pyramid
                 extraSettingsButtonTimeFormat.SetActive(true);
+
+                //countUndo moves
+                extraSettingsButtons[2].SetActive(false);
+
+                //limitUndo
+                extraSettingsButtons[3].SetActive(true);
 
                 rulesText.text = PYRAMID_RULES;
                 break;
+                #endregion Pyramid
             case "TriPeaks":
+                #region TriPeaks
                 extraSettingsButtonTimeFormat.SetActive(false);
+
+                //countUndo moves
+                extraSettingsButtons[2].SetActive(false);
+
+                //limitUndo
+                extraSettingsButtons[3].SetActive(true);
 
                 rulesText.text = TRI_PEAKS_RULES;
                 break;
+                #endregion TriPeaks
             case "FreeCell":
+                #region freeCell
                 extraSettingsButtonTimeFormat.SetActive(true);
+
+                //countUndo moves
+                extraSettingsButtons[2].SetActive(true);
+
+                //limitUndo
+                extraSettingsButtons[3].SetActive(true);
 
                 rulesText.text = FREECELL_RULES;
                 break;
+                #endregion freeCell
             case "Spider":
+                #region spider
                 extraSettingsButtonTimeFormat.SetActive(true);
+
+                //countUndo moves
+                extraSettingsButtons[2].SetActive(true);
+
+                //limitUndo
+                extraSettingsButtons[3].SetActive(true);
 
                 rulesText.text = SPIDER_RULES;
                 break;
+                #endregion spider
             case "BlackWar":
+                #region blackWar
                 extraSettingsButtonTimeFormat.SetActive(true);
+
+                //countUndo moves
+                extraSettingsButtons[2].SetActive(false);
+
+                //limitUndo
+                extraSettingsButtons[3].SetActive(false);
 
                 rulesText.text = BLACK_WAR_RULES;
                 break;
+                #endregion blackWar
         }
 
         SceneManager.LoadScene(sceneName);
