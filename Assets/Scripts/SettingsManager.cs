@@ -506,7 +506,7 @@ public class SettingsManager : MonoBehaviour
     public void VerifyQuitGame()
     {
         //create notification asking for user input
-        SetVerification("Return to main screen or desktop?", "Main screen", "Desktop", Return, QuitGame);
+        SetVerification(false, "Return to main screen or desktop?", "Main screen", "Desktop", Return, QuitGame);
 
         void Return()
         {
@@ -642,7 +642,7 @@ public class SettingsManager : MonoBehaviour
     /**
      * Creates a verification message for the user
      */
-    public void SetVerification(string question, string onAccept, string onDeny, UnityAction acceptAction, UnityAction denyAction)
+    public void SetVerification(bool closeSettings, string question, string onAccept, string onDeny, UnityAction acceptAction, UnityAction denyAction)
     {
         verificationScreen.SetActive(true);
         verificationQuestionText.text = question;
@@ -656,14 +656,14 @@ public class SettingsManager : MonoBehaviour
         {
             acceptAction();
             verificationScreen.SetActive(false);
-            mainSettings.SetActive(false);
+            if(closeSettings) mainSettings.SetActive(false);
         }
 
         void DenyAction()
         {
-            denyAction();
+            if(denyAction!=null) denyAction();
             verificationScreen.SetActive(false);
-            mainSettings.SetActive(false);
+            if (closeSettings) mainSettings.SetActive(false);
         }
     }
 
@@ -709,7 +709,7 @@ public class SettingsManager : MonoBehaviour
      */
     public void SwitchDraw3_1()
     {
-        SetVerification("Toggling this switch will reset the game.", "Reset", "Cancel", ToggleSwitch, CancelVerify);
+        SetVerification(false, "Toggling this switch will reset the game.", "Reset", "Cancel", ToggleSwitch, null);
 
         void ToggleSwitch()
         {
@@ -728,6 +728,8 @@ public class SettingsManager : MonoBehaviour
                 drawSwitch.color = Color.red;
             }
 
+            advancedOptions.SetActive(false);
+
             ResetGame();
         }
     }
@@ -739,7 +741,7 @@ public class SettingsManager : MonoBehaviour
      */
     public void SwitchLimitDeckCycles()
     {
-        SetVerification("Toggling this switch will reset the game.", "Reset", "Cancel", ToggleSwitch, CancelVerify);
+        SetVerification(false, "Toggling this switch will reset the game.", "Reset", "Cancel", ToggleSwitch, null);
 
         void ToggleSwitch()
         {
@@ -757,6 +759,8 @@ public class SettingsManager : MonoBehaviour
                 limitDeckSwitch.transform.localPosition = new Vector3(-100, 0);
                 limitDeckSwitch.color = Color.red;
             }
+
+            advancedOptions.SetActive(false);
 
             ResetGame();
         }
@@ -792,19 +796,28 @@ public class SettingsManager : MonoBehaviour
      */
     public void SwitchCountUndo()
     {
-        isCountUndo = !isCountUndo;
+        SetVerification(false, "Toggling this switch will reset the game.", "Reset", "Cancel", ToggleSwitch, null);
 
-        PlayerPrefs.SetInt(COUNT_UNDO_PREFS, isCountUndo ? 1 : 0);
+        void ToggleSwitch()
+        {
+            isCountUndo = !isCountUndo;
 
-        if (isCountUndo)
-        {
-            countUndoSwitch.transform.localPosition = new Vector3(100, 0);
-            countUndoSwitch.color = Color.green;
-        }
-        else
-        {
-            countUndoSwitch.transform.localPosition = new Vector3(-100, 0);
-            countUndoSwitch.color = Color.red;
+            PlayerPrefs.SetInt(COUNT_UNDO_PREFS, isCountUndo ? 1 : 0);
+
+            if (isCountUndo)
+            {
+                countUndoSwitch.transform.localPosition = new Vector3(100, 0);
+                countUndoSwitch.color = Color.green;
+            }
+            else
+            {
+                countUndoSwitch.transform.localPosition = new Vector3(-100, 0);
+                countUndoSwitch.color = Color.red;
+            }
+
+            advancedOptions.SetActive(false);
+
+            ResetGame();
         }
     }
 
@@ -815,7 +828,7 @@ public class SettingsManager : MonoBehaviour
      */
     public void SwitchLimitUndo()
     {
-        SetVerification("Toggling this switch will reset the game.", "Reset", "Cancel", ToggleSwitch, CancelVerify);
+        SetVerification(false, "Toggling this switch will reset the game.", "Reset", "Cancel", ToggleSwitch, null);
 
         void ToggleSwitch()
         {
@@ -833,6 +846,8 @@ public class SettingsManager : MonoBehaviour
                 limitUndoSwitch.transform.localPosition = new Vector3(-100, 0);
                 limitUndoSwitch.color = Color.red;
             }
+
+            advancedOptions.SetActive(false);
 
             ResetGame();
         }

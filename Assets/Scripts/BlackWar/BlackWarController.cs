@@ -410,7 +410,7 @@ public class BlackWarController : MonoBehaviour
                 //player lost
                 if (HasPlayerLost(0))
                 {
-                    SettingsManager.instance.SetVerification("Game Lost.\nContinue?", "Continue", "Quit", ResetGame, SettingsManager.instance.VerifyQuitGame);
+                    SettingsManager.instance.SetVerification(true, "Game Lost.\nContinue?", "Continue", "Quit", ResetGame, SettingsManager.instance.VerifyQuitGame);
                 }
                 //player hasn't completely lost yet
                 else
@@ -421,7 +421,7 @@ public class BlackWarController : MonoBehaviour
                         //find winning player
                         int winner = NoRefreshWinningPlayer()+1;
 
-                        SettingsManager.instance.SetVerification("Player "+winner+" has won.\nContinue?", "Continue", "Quit", ResetGame, SettingsManager.instance.VerifyQuitGame);
+                        SettingsManager.instance.SetVerification(true, "Player "+winner+" has won.\nContinue?", "Continue", "Quit", ResetGame, SettingsManager.instance.VerifyQuitGame);
                     }
                     else
                     {
@@ -429,7 +429,7 @@ public class BlackWarController : MonoBehaviour
                         int winner = AttritionWinner();
                         if (winner > -1)
                         {
-                            SettingsManager.instance.SetVerification("Player " + winner + " has won.\nContinue?", "Continue", "Quit", ResetGame, SettingsManager.instance.VerifyQuitGame);
+                            SettingsManager.instance.SetVerification(true, "Player " + winner + " has won.\nContinue?", "Continue", "Quit", ResetGame, SettingsManager.instance.VerifyQuitGame);
                         }
                         //else, reset winnings
                         else
