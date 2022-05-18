@@ -36,7 +36,6 @@ public class StopWatch : MonoBehaviour
         if (!hasFirstClick && Input.GetMouseButtonDown(0))
         {
             hasFirstClick = true;
-            print("resuming");
             ResumeStopWatch();
         }
     }
