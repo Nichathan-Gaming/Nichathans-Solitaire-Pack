@@ -678,19 +678,26 @@ public class SettingsManager : MonoBehaviour
      */
     public void SwitchDraw3_1()
     {
-        isDraw3 = !isDraw3;
+        SetVerification("Toggling this switch will reset the game.", "Reset", "Cancel", ToggleSwitch, CancelVerify);
 
-        PlayerPrefs.SetInt(DRAW_THREE_PREFS, isDraw3 ? 1 : 0);
+        void ToggleSwitch()
+        {
+            isDraw3 = !isDraw3;
 
-        if (isDraw3)
-        {
-            drawSwitch.transform.localPosition = new Vector3(100, 0);
-            drawSwitch.color = Color.green;
-        }
-        else
-        {
-            drawSwitch.transform.localPosition = new Vector3(-100, 0);
-            drawSwitch.color = Color.red;
+            PlayerPrefs.SetInt(DRAW_THREE_PREFS, isDraw3 ? 1 : 0);
+
+            if (isDraw3)
+            {
+                drawSwitch.transform.localPosition = new Vector3(100, 0);
+                drawSwitch.color = Color.green;
+            }
+            else
+            {
+                drawSwitch.transform.localPosition = new Vector3(-100, 0);
+                drawSwitch.color = Color.red;
+            }
+
+            ResetGame();
         }
     }
 
@@ -701,19 +708,26 @@ public class SettingsManager : MonoBehaviour
      */
     public void SwitchLimitDeckCycles()
     {
-        isLimitDeckRefresh = !isLimitDeckRefresh;
+        SetVerification("Toggling this switch will reset the game.", "Reset", "Cancel", ToggleSwitch, CancelVerify);
 
-        PlayerPrefs.SetInt(LIMIT_DRAW_PREFS, isLimitDeckRefresh ? 1 : 0);
+        void ToggleSwitch()
+        {
+            isLimitDeckRefresh = !isLimitDeckRefresh;
 
-        if (isLimitDeckRefresh)
-        {
-            limitDeckSwitch.transform.localPosition = new Vector3(100, 0);
-            limitDeckSwitch.color = Color.green;
-        }
-        else
-        {
-            limitDeckSwitch.transform.localPosition = new Vector3(-100, 0);
-            limitDeckSwitch.color = Color.red;
+            PlayerPrefs.SetInt(LIMIT_DRAW_PREFS, isLimitDeckRefresh ? 1 : 0);
+
+            if (isLimitDeckRefresh)
+            {
+                limitDeckSwitch.transform.localPosition = new Vector3(100, 0);
+                limitDeckSwitch.color = Color.green;
+            }
+            else
+            {
+                limitDeckSwitch.transform.localPosition = new Vector3(-100, 0);
+                limitDeckSwitch.color = Color.red;
+            }
+
+            ResetGame();
         }
     }
 
@@ -770,19 +784,26 @@ public class SettingsManager : MonoBehaviour
      */
     public void SwitchLimitUndo()
     {
-        isLimitUndo = !isLimitUndo;
+        SetVerification("Toggling this switch will reset the game.", "Reset", "Cancel", ToggleSwitch, CancelVerify);
 
-        PlayerPrefs.SetInt(LIMIT_UNDO_PREFS, isLimitUndo ? 1 : 0);
+        void ToggleSwitch()
+        {
+            isLimitUndo = !isLimitUndo;
 
-        if (isLimitUndo)
-        {
-            limitUndoSwitch.transform.localPosition = new Vector3(100, 0);
-            limitUndoSwitch.color = Color.green;
-        }
-        else
-        {
-            limitUndoSwitch.transform.localPosition = new Vector3(-100, 0);
-            limitUndoSwitch.color = Color.red;
+            PlayerPrefs.SetInt(LIMIT_UNDO_PREFS, isLimitUndo ? 1 : 0);
+
+            if (isLimitUndo)
+            {
+                limitUndoSwitch.transform.localPosition = new Vector3(100, 0);
+                limitUndoSwitch.color = Color.green;
+            }
+            else
+            {
+                limitUndoSwitch.transform.localPosition = new Vector3(-100, 0);
+                limitUndoSwitch.color = Color.red;
+            }
+
+            ResetGame();
         }
     }
 
