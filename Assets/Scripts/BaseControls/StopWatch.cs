@@ -29,6 +29,16 @@ public class StopWatch : MonoBehaviour
     [Header("This will display the time elapsed from start")]
     public float timeElapsed;
 
+    [SerializeField] bool hasFirstClick = true;
+
+    private void Update()
+    {
+        if (!hasFirstClick && Input.GetMouseButtonDown(0))
+        {
+            ResumeStopWatch();
+        }
+    }
+
     private void FixedUpdate()
     {
         if (started)
@@ -56,6 +66,9 @@ public class StopWatch : MonoBehaviour
         currentTime = 0;
         started = true;
         initialized = true;
+        hasFirstClick = false;
+
+        PauseStopWatch();
     }
     
     /**
@@ -100,6 +113,7 @@ public class StopWatch : MonoBehaviour
      */
     public void StopStopWatch()
     {
+        hasFirstClick = true;
         started = false;
         currentTime = 0;
         initialTime = 0;
