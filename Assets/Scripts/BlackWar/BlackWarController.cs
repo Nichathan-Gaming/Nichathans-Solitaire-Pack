@@ -293,9 +293,9 @@ public class BlackWarController : MonoBehaviour
     {
         turn++;
         turnText.text = "" + turn;
-        foreach (Transform t in playerHandArea)
+        for (int i=0;i<numberOfPlayers;i++)//Transform t in playerHandArea
         {
-            if (t.childCount > 0) return;
+            if (playerHandArea[i].childCount > 0) return;
         }
 
         for(int i = 0; i < numberOfPlayers; i++)
@@ -395,11 +395,11 @@ public class BlackWarController : MonoBehaviour
         else
         {
             //move all cards to winners winningsArea
-            foreach(Transform t in playerHandArea)
+            for(int i=0;i<numberOfPlayers;i++)
             {
-                while (t.childCount > 0)
+                while (playerHandArea[i].childCount > 0)
                 {
-                    t.GetChild(0).SetParent(playerWinningsArea[winners[0]]);
+                    playerHandArea[i].GetChild(0).SetParent(playerWinningsArea[winners[0]]);
                 }
             }
 
@@ -451,9 +451,9 @@ public class BlackWarController : MonoBehaviour
          */
         bool IsSectionOver()
         {
-            foreach (Transform t in playerDeckArea)
+            for (int i=0;i<numberOfPlayers;i++)//Transform t in playerDeckArea
             {
-                if (t.childCount < 1)
+                if (playerDeckArea[i].childCount < 1)
                 {
                     return true;
                 }
