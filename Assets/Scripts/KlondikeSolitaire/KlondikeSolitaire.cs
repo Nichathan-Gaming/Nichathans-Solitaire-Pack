@@ -369,8 +369,10 @@ public class KlondikeSolitaire : MonoBehaviour
      */
     private void SearchForCompletion()
     {
+        NullifyLastClicked();
+
         //loop through the fourLocations
-        foreach(GameObject fourLocationsObject in fourLocations)
+        foreach (GameObject fourLocationsObject in fourLocations)
         {
             Transform fourLocationsParent = GetLastChild(fourLocationsObject).transform;
 
