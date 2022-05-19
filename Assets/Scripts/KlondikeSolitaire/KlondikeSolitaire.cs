@@ -191,7 +191,21 @@ public class KlondikeSolitaire : MonoBehaviour
 
         stopWatch.StartStopWatch(SetTime);
 
-        movesText.text = "" + (SettingsManager.instance.IsCountUndo() ? countUndoCount: histories.Count);
+        ManageUI();
+    }
+
+    void ManageUI()
+    {
+        if (SettingsManager.instance.IsLimitDeckRefresh())
+        {
+            deckRefreshText.text = "" + SettingsManager.instance.GetDeckRefreshesLeft();
+        }
+        else
+        {
+            deckRefreshText.text = "";
+        }
+
+        movesText.text = "" + (SettingsManager.instance.IsCountUndo() ? countUndoCount : histories.Count);
 
         #region handle reset from setting changes
         undoLimitTitle.SetActive(SettingsManager.instance.IsLimitUndo());
@@ -205,15 +219,6 @@ public class KlondikeSolitaire : MonoBehaviour
      */
     public void ResetGame()
     {
-        if (SettingsManager.instance.IsLimitDeckRefresh())
-        {
-            deckRefreshText.text = "" + SettingsManager.instance.GetDeckRefreshesLeft();
-        }
-        else
-        {
-            deckRefreshText.text = "";
-        }
-
         //move from fourLocations to instantiationLocation 
         foreach (GameObject go in fourLocations)
         {
@@ -243,13 +248,7 @@ public class KlondikeSolitaire : MonoBehaviour
 
         stopWatch.RestartStopWatch();
 
-        movesText.text = "" + (SettingsManager.instance.IsCountUndo() ? countUndoCount : histories.Count);
-
-        #region handle reset from setting changes
-        undoLimitTitle.SetActive(SettingsManager.instance.IsLimitUndo());
-        undoLimitText.gameObject.SetActive(SettingsManager.instance.IsLimitUndo());
-        undoLimitText.text = SettingsManager.instance.GetCurrentUndosLeft() + "";
-        #endregion handle reset from setting changes
+        ManageUI();
     }
 
     public void DrawCard()
