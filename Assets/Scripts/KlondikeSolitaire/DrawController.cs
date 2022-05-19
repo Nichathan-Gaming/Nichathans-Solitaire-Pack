@@ -136,7 +136,7 @@ public class DrawController : MonoBehaviour
         if (klondikeSolitaire.deck.transform.childCount <1)
         {
             //starts at 0, triggers to 1, then triggers to 2. 2 > 1, stops
-            if (!(SettingsManager.instance.IsLimitDeckRefresh() && SettingsManager.instance.CanRefreshDeck(klondikeSolitaire.deckRefreshText)))
+            if (!SettingsManager.instance.IsLimitDeckRefresh() || SettingsManager.instance.CanRefreshDeck(klondikeSolitaire.deckRefreshText))
             {
                 //add the back to this card and set alpha back to normal
                 while (klondikeSolitaire.drawnCardHolder.transform.childCount > 0)
