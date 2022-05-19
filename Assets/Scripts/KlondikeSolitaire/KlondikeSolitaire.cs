@@ -208,8 +208,9 @@ public class KlondikeSolitaire : MonoBehaviour
         movesText.text = "" + (SettingsManager.instance.IsCountUndo() ? countUndoCount : histories.Count);
 
         #region handle reset from setting changes
-        undoLimitTitle.SetActive(SettingsManager.instance.IsLimitUndo());
-        undoLimitText.gameObject.SetActive(SettingsManager.instance.IsLimitUndo());
+        bool isLimitUndo = SettingsManager.instance.IsLimitUndo();
+        undoLimitTitle.SetActive(isLimitUndo);
+        undoLimitText.gameObject.SetActive(isLimitUndo);
         undoLimitText.text = SettingsManager.instance.GetCurrentUndosLeft() + "";
         #endregion handle reset from setting changes
     }

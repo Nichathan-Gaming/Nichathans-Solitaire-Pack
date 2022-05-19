@@ -127,14 +127,14 @@ public class SettingsManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(this.gameObject);
         }
+
+        SetVariables();
     }
 
     // Start is called before the first frame update
     void Start()
     {
         Screen.SetResolution(1920, 1080, true);
-
-        SetVariables();
 
         //if (hasMusic && !gameMusic.isPlaying) gameMusic.Play();
     }
@@ -657,6 +657,7 @@ public class SettingsManager : MonoBehaviour
             acceptAction();
             verificationScreen.SetActive(false);
             if(closeSettings) mainSettings.SetActive(false);
+            ClearActions();
         }
 
         void DenyAction()
@@ -664,6 +665,13 @@ public class SettingsManager : MonoBehaviour
             if(denyAction!=null) denyAction();
             verificationScreen.SetActive(false);
             if (closeSettings) mainSettings.SetActive(false);
+            ClearActions();
+        }
+
+        void ClearActions()
+        {
+            verificationConfirmButton.onClick.RemoveAllListeners();
+            verificationCancelButton.onClick.RemoveAllListeners();
         }
     }
 
@@ -836,18 +844,20 @@ public class SettingsManager : MonoBehaviour
 
             PlayerPrefs.SetInt(LIMIT_UNDO_PREFS, isLimitUndo ? 1 : 0);
 
-            if (isLimitUndo)
-            {
-                limitUndoSwitch.transform.localPosition = new Vector3(100, 0);
-                limitUndoSwitch.color = Color.green;
-            }
-            else
-            {
-                limitUndoSwitch.transform.localPosition = new Vector3(-100, 0);
-                limitUndoSwitch.color = Color.red;
-            }
+            //if (isLimitUndo)
+            //{
+            //    limitUndoSwitch.transform.localPosition = new Vector3(100, 0);
+            //    limitUndoSwitch.color = Color.green;
+            //}
+            //else
+            //{
+            //    limitUndoSwitch.transform.localPosition = new Vector3(-100, 0);
+            //    limitUndoSwitch.color = Color.red;
+            //}
 
             advancedOptions.SetActive(false);
+
+            SetVariables();
 
             ResetGame();
         }
