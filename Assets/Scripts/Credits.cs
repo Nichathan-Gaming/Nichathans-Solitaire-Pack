@@ -9,4 +9,9 @@ public class Credits : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenuScene");
     }
+
+    public void OpenItch()
+    {
+        Application.OpenURL("https://nichathan.itch.io/");
+    }
 }

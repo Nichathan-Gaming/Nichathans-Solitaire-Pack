@@ -145,6 +145,11 @@ public class SettingsManager : MonoBehaviour
 
     }
 
+    public void ATest()
+    {
+        Application.OpenURL("https://forum.unity.com/threads/load-web-page-in-unity.564451/");
+    }
+
     /**
      * Sets the variables and switches for the game
      */
