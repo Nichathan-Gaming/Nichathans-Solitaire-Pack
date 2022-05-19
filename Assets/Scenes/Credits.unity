@@ -746,9 +746,25 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Credits\n Project Lead, Coder, Developer: Nichathan\n Card artwork: Lani\n\n3rd
-    Part Credits\nIDE: Unity\nBackground images: Sweet Land GUI.\nIcons inspired
-    by CleanFlatIcon and edited by Nichathan\nVollkorn Text: Vollkorn"
+  m_Text: 'Credits
+
+    Project Lead, Coder, Developer: Nichathan
+
+    (Future) Card
+    artwork: Lani
+
+
+    3rd Part Credits
+
+    IDE: Unity
+
+    Background images:
+    Sweet Land GUI.
+
+    Icons inspired by CleanFlatIcon and edited by Nichathan
+
+    Vollkorn
+    Text: Vollkorn'
 --- !u!222 &1193235755
 CanvasRenderer:
   m_ObjectHideFlags: 0

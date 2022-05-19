@@ -114,6 +114,8 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] GameObject blackWarSettings;
     #endregion BlackWar Variables
 
+    bool isResetOnAdvancedClose = false;
+
     private void Awake()
     {
         if (instance == null)
@@ -145,9 +147,15 @@ public class SettingsManager : MonoBehaviour
 
     }
 
-    public void ATest()
+    public void CloseAdvancedSettings()
     {
-        Application.OpenURL("https://forum.unity.com/threads/load-web-page-in-unity.564451/");
+        if (isResetOnAdvancedClose)
+        {
+            ResetGame();
+            isResetOnAdvancedClose = false;
+        }
+
+        advancedOptions.SetActive(false);
     }
 
     /**
@@ -722,7 +730,7 @@ public class SettingsManager : MonoBehaviour
      */
     public void SwitchDraw3_1()
     {
-        SetVerification(false, "Toggling this switch will reset the game.", "Reset", "Cancel", ToggleSwitch, null);
+        SetVerification(false, "Toggling this switch will reset the game.", "Continue", "Cancel", ToggleSwitch, null);
 
         void ToggleSwitch()
         {
@@ -741,9 +749,7 @@ public class SettingsManager : MonoBehaviour
                 drawSwitch.color = Color.red;
             }
 
-            advancedOptions.SetActive(false);
-
-            ResetGame();
+            isResetOnAdvancedClose = true;
         }
     }
 
@@ -754,7 +760,7 @@ public class SettingsManager : MonoBehaviour
      */
     public void SwitchLimitDeckCycles()
     {
-        SetVerification(false, "Toggling this switch will reset the game.", "Reset", "Cancel", ToggleSwitch, null);
+        SetVerification(false, "Toggling this switch will reset the game.", "Continue", "Cancel", ToggleSwitch, null);
 
         void ToggleSwitch()
         {
@@ -773,9 +779,7 @@ public class SettingsManager : MonoBehaviour
                 limitDeckSwitch.color = Color.red;
             }
 
-            advancedOptions.SetActive(false);
-
-            ResetGame();
+            isResetOnAdvancedClose = true;
         }
     }
 
@@ -809,7 +813,7 @@ public class SettingsManager : MonoBehaviour
      */
     public void SwitchCountUndo()
     {
-        SetVerification(false, "Toggling this switch will reset the game.", "Reset", "Cancel", ToggleSwitch, null);
+        SetVerification(false, "Toggling this switch will reset the game.", "Continue", "Cancel", ToggleSwitch, null);
 
         void ToggleSwitch()
         {
@@ -828,9 +832,7 @@ public class SettingsManager : MonoBehaviour
                 countUndoSwitch.color = Color.red;
             }
 
-            advancedOptions.SetActive(false);
-
-            ResetGame();
+            isResetOnAdvancedClose = true;
         }
     }
 
@@ -841,7 +843,7 @@ public class SettingsManager : MonoBehaviour
      */
     public void SwitchLimitUndo()
     {
-        SetVerification(false, "Toggling this switch will reset the game.", "Reset", "Cancel", ToggleSwitch, null);
+        SetVerification(false, "Toggling this switch will reset the game.", "Continue", "Cancel", ToggleSwitch, null);
 
         void ToggleSwitch()
         {
@@ -849,22 +851,18 @@ public class SettingsManager : MonoBehaviour
 
             PlayerPrefs.SetInt(LIMIT_UNDO_PREFS, isLimitUndo ? 1 : 0);
 
-            //if (isLimitUndo)
-            //{
-            //    limitUndoSwitch.transform.localPosition = new Vector3(100, 0);
-            //    limitUndoSwitch.color = Color.green;
-            //}
-            //else
-            //{
-            //    limitUndoSwitch.transform.localPosition = new Vector3(-100, 0);
-            //    limitUndoSwitch.color = Color.red;
-            //}
+            if (isLimitUndo)
+            {
+                limitUndoSwitch.transform.localPosition = new Vector3(100, 0);
+                limitUndoSwitch.color = Color.green;
+            }
+            else
+            {
+                limitUndoSwitch.transform.localPosition = new Vector3(-100, 0);
+                limitUndoSwitch.color = Color.red;
+            }
 
-            advancedOptions.SetActive(false);
-
-            SetVariables();
-
-            ResetGame();
+            isResetOnAdvancedClose = true;
         }
     }
 

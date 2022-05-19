@@ -42,7 +42,7 @@ public class DrawController : MonoBehaviour
 
     private void DrawThree(Transform drawChild)
     {
-        if(klondikeSolitaire.drawnCardHolder.transform.childCount>0)Reset(klondikeSolitaire.drawnCardHolder.transform.GetChild(0));
+        if(klondikeSolitaire.drawnCardHolder.transform.childCount>0) Reset(klondikeSolitaire.drawnCardHolder.transform.GetChild(0));
 
         //get the parent we are moving to.
         Transform parentTransform = klondikeSolitaire.GetLastChild(klondikeSolitaire.drawnCardHolder).transform;

@@ -11806,7 +11806,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1406544799}
         m_TargetAssemblyTypeName: SettingsManager, Assembly-CSharp
-        m_MethodName: ToggleAdvancedSettings
+        m_MethodName: CloseAdvancedSettings
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
