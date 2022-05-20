@@ -14,4 +14,9 @@ public class Credits : MonoBehaviour
     {
         Application.OpenURL("https://nichathan.itch.io/");
     }
+
+    public void OpenGitHub()
+    {
+        Application.OpenURL("https://github.com/Nichathan-Gaming/Nichathans-Solitaire-Pack");
+    }
 }
