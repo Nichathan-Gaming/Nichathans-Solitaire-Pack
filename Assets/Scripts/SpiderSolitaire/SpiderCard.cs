@@ -51,12 +51,17 @@ public class SpiderCard : MonoBehaviour
 
                 if (!SpiderController.instance.TryToPlace(this))
                 {
-                    //return to previous position
-                    transform.SetParent(parentBeforeMove);
-                    transform.localPosition = localpositionBeforeMove;
+                    ReturnToPreviousPosition();
                 }
             }
         }
+    }
+
+    public void ReturnToPreviousPosition()
+    {
+        //return to previous position
+        transform.SetParent(parentBeforeMove);
+        transform.localPosition = localpositionBeforeMove;
     }
 
     public void TryToMove()

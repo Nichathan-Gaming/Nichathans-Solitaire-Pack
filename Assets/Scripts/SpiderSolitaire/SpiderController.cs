@@ -98,7 +98,7 @@ public class SpiderController : MonoBehaviour
                 if (HandleClicked(result.gameObject.transform)) return;
             }
 
-            NullifyLastClicked();
+            NullifyLastClicked(true);
         }
 
         if (Input.GetMouseButton(1))
@@ -129,8 +129,8 @@ public class SpiderController : MonoBehaviour
     private bool HandleClicked(Transform clickedObject)
     {
         SpiderCard card = clickedObject.GetComponent<SpiderCard>();
-
-        if(lastClicked == null && card != null)
+        
+        if (lastClicked == null && card != null)
         {
             if (!card.CanCardMove()) return false;
         }
@@ -146,10 +146,10 @@ public class SpiderController : MonoBehaviour
                 ToggleHighlight(clickedObject, true);
                 return true;
             }
-            
+
             return CardClicked(card);
         }
-        else if(clickedObject.name.Contains("column") && lastClicked != null)
+        else if (clickedObject.name.Contains("column") && lastClicked != null)
         {
             ColumnClicked(clickedObject);
             return true;
@@ -160,7 +160,7 @@ public class SpiderController : MonoBehaviour
             return true;
         }
 
-        NullifyLastClicked();
+        NullifyLastClicked(true);
 
         VerifyCardsFlipped();
 
@@ -211,7 +211,7 @@ public class SpiderController : MonoBehaviour
         if (card.IsNextCard(lastClicked))
         {
             lastClicked.PlaceCard(card.transform, SpiderCard.CARD_PLACEMENT_DIFFERENCE, true, false);
-            NullifyLastClicked();
+            NullifyLastClicked(false);
             return true;
         }
         return false;
@@ -220,13 +220,14 @@ public class SpiderController : MonoBehaviour
     private void ColumnClicked(Transform column)
     {
         lastClicked.PlaceCard(column, Vector3.zero, false, false);
-        NullifyLastClicked();
+        NullifyLastClicked(false);
     }
 
-    void NullifyLastClicked()
+    void NullifyLastClicked(bool returnToPrevPos)
     {
         if (lastClicked != null)
         {
+            if(returnToPrevPos) lastClicked.ReturnToPreviousPosition();
             ToggleHighlight(lastClicked.transform, false);
         }
         lastClicked = null;
