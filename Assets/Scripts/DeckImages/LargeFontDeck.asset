@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 934bdc3e2f2ecdd49acf1969d838cb2f, type: 3}
+  m_Name: LargeFontDeck
+  m_EditorClassIdentifier: 
+  deckName: 
+  aceSpades: {fileID: 0}
+  twoSpades: {fileID: 0}
+  threeSpades: {fileID: 0}
+  fourSpades: {fileID: 0}
+  fiveSpades: {fileID: 0}
+  sixSpades: {fileID: 0}
+  sevenSpades: {fileID: 0}
+  eightSpades: {fileID: 0}
+  nineSpades: {fileID: 0}
+  tenSpades: {fileID: 0}
+  jackSpades: {fileID: 0}
+  queenSpades: {fileID: 0}
+  kingSpades: {fileID: 0}
+  aceClubs: {fileID: 0}
+  twoClubs: {fileID: 0}
+  threeClubs: {fileID: 0}
+  fourClubs: {fileID: 0}
+  fiveClubs: {fileID: 0}
+  sixClubs: {fileID: 0}
+  sevenClubs: {fileID: 0}
+  eightClubs: {fileID: 0}
+  nineClubs: {fileID: 0}
+  tenClubs: {fileID: 0}
+  jackClubs: {fileID: 0}
+  queenClubs: {fileID: 0}
+  kingClubs: {fileID: 0}
+  aceHearts: {fileID: 0}
+  twoHearts: {fileID: 0}
+  threeHearts: {fileID: 0}
+  fourHearts: {fileID: 0}
+  fiveHearts: {fileID: 0}
+  sixHearts: {fileID: 0}
+  sevenHearts: {fileID: 0}
+  eightHearts: {fileID: 0}
+  nineHearts: {fileID: 0}
+  tenHearts: {fileID: 0}
+  jackHearts: {fileID: 0}
+  queenHearts: {fileID: 0}
+  kingHearts: {fileID: 0}
+  aceDiamonds: {fileID: 0}
+  twoDiamonds: {fileID: 0}
+  threeDiamonds: {fileID: 0}
+  fourDiamonds: {fileID: 0}
+  fiveDiamonds: {fileID: 0}
+  sixDiamonds: {fileID: 0}
+  sevenDiamonds: {fileID: 0}
+  eightDiamonds: {fileID: 0}
+  nineDiamonds: {fileID: 0}
+  tenDiamonds: {fileID: 0}
+  jackDiamonds: {fileID: 0}
+  queenDiamonds: {fileID: 0}
+  kingDiamonds: {fileID: 0}
