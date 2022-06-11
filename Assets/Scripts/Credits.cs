@@ -19,4 +19,9 @@ public class Credits : MonoBehaviour
     {
         Application.OpenURL("https://github.com/Nichathan-Gaming/Nichathans-Solitaire-Pack");
     }
+
+    public void OpenGmail()
+    {
+        Application.OpenURL("mailto:nichathannichols@gmail.com");
+    }
 }
