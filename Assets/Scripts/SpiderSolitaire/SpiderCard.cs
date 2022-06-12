@@ -14,8 +14,6 @@ public class SpiderCard : MonoBehaviour
     [Header("Displaying Side Variables")]
     [SerializeField] Image currentImage;
     [SerializeField] bool isCardFaceUp;
-    Sprite frontImage;
-    [SerializeField] Sprite backImage;
 
     [Header("Moving variables")]
     [SerializeField] bool isMoving;
@@ -180,12 +178,6 @@ public class SpiderCard : MonoBehaviour
         this.suit = suit;
         this.number = number;
 
-        frontImage = Resources.Load<Sprite>(
-            "Images/SolitaireCards/" + 
-            GetSuitWord() + "/" + 
-            GetNumberAsChar() +
-            GetSuitChar());
-
         SetIsCardFaceUp(isCardFaceUp);
     }
 
@@ -268,7 +260,7 @@ public class SpiderCard : MonoBehaviour
     {
         this.isCardFaceUp = isCardFaceUp;
 
-        currentImage.sprite = isCardFaceUp ? frontImage : backImage;
+        currentImage.sprite = isCardFaceUp ? SettingsManager.instance.GetCardFront(suit, number) : SettingsManager.instance.GetCardBack();
     }
 
     public bool GetIsCardFaceUp()

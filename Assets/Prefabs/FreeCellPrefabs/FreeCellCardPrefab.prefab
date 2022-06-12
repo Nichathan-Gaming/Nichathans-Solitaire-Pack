@@ -91,7 +91,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   suit: 0
   number: 0
-  location: 0
+  cardImage: {fileID: 12066967555614675}
   isClicked: 0
   playArea: {fileID: 0}
   parentOnMove: {fileID: 0}

@@ -1626,6 +1626,8 @@ MonoBehaviour:
   playArea: {fileID: 148421758}
   cardPrefab: {fileID: 12066967555614638, guid: 949f6a33e18597142aa5922d94de3725, type: 3}
   instantiationLocation: {fileID: 475494978}
+  timerText: {fileID: 56370366}
+  movesText: {fileID: 51283310}
   countUndoCount: 0
 --- !u!114 &985434910
 MonoBehaviour:

@@ -7,8 +7,10 @@ using UnityEngine.UI;
 //look for the quiz tutorial code to make a creatable object
 public class FreeCellCard : MonoBehaviour
 {
-    [SerializeField] char suit;
+    [SerializeField] int suit;
     [SerializeField] int number;
+
+    [SerializeField] Image cardImage;
 
     [SerializeField] bool isClicked;
 
@@ -115,32 +117,15 @@ public class FreeCellCard : MonoBehaviour
 
     public void SetCard(int suitNumb, int number, Transform playArea)
     {
-        char suit;
-        switch (suitNumb)
-        {
-            case 0:
-                suit = 'C';
-                break;
-            case 1:
-                suit = 'S';
-                break;
-            case 2:
-                suit = 'D';
-                break;
-            case 3:
-                suit = 'H';
-                break;
-            default:
-                throw new System.Exception("TypeNumber: " + suitNumb + " is invalid.");
-        }
-
-        if (!VerifySuit(suit)) throw new System.Exception("Type: " + suit + " is invalid.");
+        if (!VerifySuit(suitNumb)) throw new System.Exception("Type: " + suitNumb + " is invalid.");
         if (!VerifyNumber(number)) throw new System.Exception("Number: " + number + " is invalid.");
         if (playArea == null) throw new System.Exception("PlayArea cannot be null.");
 
-        this.suit = suit;
+        suit = suitNumb;
         this.number = number;
         this.playArea = playArea;
+
+        cardImage.sprite = SettingsManager.instance.GetCardFront(suitNumb, number);
     }
 
     public bool IsNextCardKtoA(FreeCellCard placingCard)
@@ -157,26 +142,9 @@ public class FreeCellCard : MonoBehaviour
         return placingCard.GetSuit().Equals(suit) && ((number + 1) == placingCard.GetNumber());
     }
 
-    public char GetSuit()
+    public int GetSuit()
     {
         return suit;
-    }
-
-    public string GetSuitWord()
-    {
-        switch (suit)
-        {
-            case 'C':
-                return "Clubs";
-            case 'D':
-                return "Diamonds";
-            case 'H':
-                return "Hearts";
-            case 'S':
-                return "Spades";
-        }
-
-        throw new System.Exception("Suit: (" + suit + ") is invalid.");
     }
 
     public int GetNumber()
@@ -219,36 +187,24 @@ public class FreeCellCard : MonoBehaviour
         throw new System.Exception("Number: (" + number + ") is invalid.");
     }
 
-    private bool IsOppositeSuit(char suit)
+    private bool IsOppositeSuit(int suit)
     {
         switch (this.suit)
         {
-            case 'C':
-            case 'S':
-                return suit.Equals('D') || suit.Equals('H');
-            case 'D':
-            case 'H':
-                return suit.Equals('C') || suit.Equals('S');
+            case 0:
+            case 1:
+                return suit == 2 || suit == 3;
+            case 2:
+            case 3:
+                return suit == 0 || suit == 1;
             default:
                 return false;
         }
     }
 
-    private bool VerifySuit(char suit)
+    private bool VerifySuit(int suit)
     {
-        switch (suit)
-        {
-            case 'C':
-                return true;
-            case 'S':
-                return true;
-            case 'D':
-                return true;
-            case 'H':
-                return true;
-            default:
-                return false;
-        }
+        return suit > -1 && suit < 4;
     }
 
     private bool VerifyNumber(int number)

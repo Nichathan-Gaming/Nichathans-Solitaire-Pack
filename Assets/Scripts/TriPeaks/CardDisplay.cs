@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class CardDisplay : MonoBehaviour, IPointerDownHandler
 {
-    public TriPeaksController triPeaksController;
-
     Sprite frontImage;
     Sprite backImage;
     [SerializeField]private Image thisImage;
@@ -23,7 +21,7 @@ public class CardDisplay : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        triPeaksController.HandleClickCard(this);
+        TriPeaksController.instance.HandleClickCard(this);
         //Debug.Log("name: "+this.name+"\nindex: "+index);
     }
 

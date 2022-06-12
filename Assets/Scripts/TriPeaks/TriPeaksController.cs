@@ -9,6 +9,8 @@ using Random = UnityEngine.Random;
 
 public class TriPeaksController : MonoBehaviour // TOP: 15, 21, 27
 {
+    public static TriPeaksController instance;
+
     private const string TRI_PEAKS_HIGHEST_COMBO_PREFS = "TriPeaksHighestCombo",
         TRI_PEAKS_HIGHEST_SCORE_PREFS = "TriPeaksHighestScore";
 
@@ -44,6 +46,21 @@ public class TriPeaksController : MonoBehaviour // TOP: 15, 21, 27
     //the list of our history used for undo
     private Stack<History> historiesList = new Stack<History>();
 
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this; // In first scene, make us the singleton.
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (instance != this)
+        {
+            Destroy(instance.gameObject); // On reload, singleton already set, so destroy duplicate.
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -69,73 +86,6 @@ public class TriPeaksController : MonoBehaviour // TOP: 15, 21, 27
                 else
                 {
                     cardDisplay.SetCard(i, j);
-                    //cardDisplay.cardNumber = j;
-                    cardDisplay.triPeaksController = this;
-
-                    char GetSuitAsChar(int suit)
-                    {
-                        switch (suit)
-                        {
-                            case 0:
-                                return 'H';
-                            case 1:
-                                return 'D';
-                            case 2:
-                                return 'S';
-                            case 3:
-                                return 'C';
-                            default:
-                                return ' ';
-                        }
-                    }
-
-                    string GetSuitAsString(int suit)
-                    {
-                        switch (suit)
-                        {
-                            case 0:
-                                return "Hearts";
-                            case 1:
-                                return "Diamonds";
-                            case 2:
-                                return "Spades";
-                            case 3:
-                                return "Clubs";
-                            default:
-                                return "";
-                        }
-                    }
-
-                    char GetCardNumberAsChar(int cardNumber)
-                    {
-                        switch (cardNumber)
-                        {
-                            case 0:
-                                return 'A';
-                            case 1:
-                            case 2:
-                            case 3:
-                            case 4:
-                            case 5:
-                            case 6:
-                            case 7:
-                            case 8:
-                                //return Integer.toString(cardNumber + 1).charAt(0);
-                                string s = "" + (cardNumber + 1);
-                                return s[0];
-                            case 9:
-                                return 'X';
-                            case 10:
-                                return 'J';
-                            case 11:
-                                return 'Q';
-                            case 12:
-                                return 'K';
-                            default:
-                                return ' ';
-                        }
-                    }
-
                 }
                 #endregion get and set card image
             }

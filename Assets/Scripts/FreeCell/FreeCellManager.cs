@@ -56,7 +56,8 @@ public class FreeCellManager : MonoBehaviour
     private StopWatch stopWatch;
 
     //The text to show players their scores
-    private Text timerText, movesText;
+    [SerializeField] Text timerText;
+    [SerializeField] Text movesText;
     [SerializeField] int countUndoCount = 0;
 
     void Awake()
@@ -78,10 +79,6 @@ public class FreeCellManager : MonoBehaviour
 
         SettingsManager.RESET = ResetGame;
         SettingsManager.UNDO = Undo;
-
-        timerText = GameObject.Find("TimerText").GetComponent<Text>();
-
-        movesText = GameObject.Find("MovesText").GetComponent<Text>();
 
         #region handle reset from setting changes
         undoLimitTitle.SetActive(SettingsManager.instance.IsLimitUndo());
@@ -369,7 +366,6 @@ public class FreeCellManager : MonoBehaviour
                 if (freeCellCard != null)
                 {
                     freeCellCard.SetCard(i, j, playArea);
-                    freeCellCard.GetComponent<Image>().sprite = Resources.Load<Sprite>("Images/SolitaireCards/" + freeCellCard.GetSuitWord() + "/" + freeCellCard.GetNumberAsChar() + freeCellCard.GetSuit());
                 }
                 else
                 {
