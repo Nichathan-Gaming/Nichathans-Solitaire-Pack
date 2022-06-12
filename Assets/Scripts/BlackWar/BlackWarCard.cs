@@ -37,11 +37,7 @@ public class BlackWarCard : MonoBehaviour
         this.suit = suit;
         this.number = number;
 
-        currentImage.sprite = Resources.Load<Sprite>(
-            "Images/SolitaireCards/" +
-            GetSuitWord() + "/" +
-            GetNumberAsChar() +
-            GetSuitChar());
+        currentImage.sprite = SettingsManager.instance.GetCardFront(suit, number);
     }
 
     public int GetCardValue()
