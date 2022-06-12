@@ -8,11 +8,18 @@ public class CardDisplay : MonoBehaviour, IPointerDownHandler
 {
     public TriPeaksController triPeaksController;
 
-    public Sprite frontImage;
-    public Sprite backImage;
+    Sprite frontImage;
+    Sprite backImage;
     [SerializeField]private Image thisImage;
     public int cardNumber;
     public int index;
+
+    public void SetCard(int suit, int number)
+    {
+        backImage = SettingsManager.instance.GetCardBack();
+        frontImage = SettingsManager.instance.GetCardFront(suit, number);
+        cardNumber = number;
+    }
 
     public void OnPointerDown(PointerEventData eventData)
     {

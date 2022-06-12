@@ -68,8 +68,8 @@ public class TriPeaksController : MonoBehaviour // TOP: 15, 21, 27
                 }
                 else
                 {
-                    cardDisplay.frontImage = Resources.Load<Sprite>("Images/SolitaireCards/" + GetSuitAsString(i) + "/" + GetCardNumberAsChar(j) + GetSuitAsChar(i));
-                    cardDisplay.cardNumber = j;
+                    cardDisplay.SetCard(i, j);
+                    //cardDisplay.cardNumber = j;
                     cardDisplay.triPeaksController = this;
 
                     char GetSuitAsChar(int suit)
