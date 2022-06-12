@@ -146,7 +146,7 @@ public class PyramidGameController : MonoBehaviour
                 }
                 else
                 {
-                    cardImage.sprite = Resources.Load<Sprite>("Images/SolitaireCards/"+ card.getSuitAsString()+"/"+card.getCardNumberAsChar()+ card.getSuitAsChar());
+                    cardImage.sprite = SettingsManager.instance.GetCardFront(i,j); //Resources.Load<Sprite>("Images/SolitaireCards/"+ card.getSuitAsString()+"/"+card.getCardNumberAsChar()+ card.getSuitAsChar());
                 }
                 #endregion get and set card image
             }

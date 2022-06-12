@@ -7102,14 +7102,14 @@ MonoBehaviour:
   isLimitUndo: 0
   limitUndoSwitch: {fileID: 581562823}
   blackWarSettings: {fileID: 1721641911}
-  activeBack: 0
+  activeBack: 1
   backs:
   - {fileID: 21300000, guid: b1ec1c627088d8d4297841a524a5f9fa, type: 3}
   - {fileID: 21300000, guid: a3c242f103248984989dbe95be87c004, type: 3}
   - {fileID: 21300000, guid: c8e3935e62346c040a055458b6c6ee74, type: 3}
   - {fileID: 21300000, guid: 6caefd4e10f5629469f7ec57fb5d580e, type: 3}
   - {fileID: 21300000, guid: 0c15c7297d20857429e27734e7f0907f, type: 3}
-  activeDeck: 0
+  activeDeck: 1
   deckFronts:
   - {fileID: 11400000, guid: f3b9cb7a29122e740a3c3d7035bf885d, type: 2}
   - {fileID: 11400000, guid: 1ada88704183e714c8885f21871f020c, type: 2}
