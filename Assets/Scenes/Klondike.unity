@@ -758,6 +758,7 @@ GameObject:
   - component: {fileID: 438152565}
   - component: {fileID: 438152564}
   - component: {fileID: 438152566}
+  - component: {fileID: 438152567}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -797,11 +798,12 @@ MonoBehaviour:
   instantiationLocation: {fileID: 1264680166}
   deck: {fileID: 955925835}
   cardPrefab: {fileID: 4584406245617864492, guid: 23c29b24d1bb18b43b0e0f0dc77caca7, type: 3}
-  graphicRaycaster: {fileID: 0}
+  graphicRaycaster: {fileID: 1708348926}
+  drawnCardHolder: {fileID: 1730982268}
+  stopWatch: {fileID: 438152566}
+  drawDeck: {fileID: 2142585008}
   lastClickedFlippableCard: {fileID: 0}
   draggingCard: {fileID: 0}
-  drawController: {fileID: 0}
-  drawnCardHolder: {fileID: 0}
   deckRefreshText: {fileID: 30788379}
   timerText: {fileID: 1592082540}
   movesText: {fileID: 637044222}
@@ -834,6 +836,18 @@ MonoBehaviour:
   timerText: {fileID: 0}
   timeElapsed: 0
   hasFirstClick: 1
+--- !u!114 &438152567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 438152563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 131fd2b2170b6564cbd0853d3aeb4f13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &552428343
 PrefabInstance:
   m_ObjectHideFlags: 0

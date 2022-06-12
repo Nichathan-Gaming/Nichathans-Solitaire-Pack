@@ -5,15 +5,15 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Linq;
 
-public enum SUIT{Spades='S', Clubs='C', Hearts='H', Diamonds='D' };
-public enum NUMBER { ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING};
+//public enum SUIT{Spades='S', Clubs='C', Hearts='H', Diamonds='D' };
+//public enum NUMBER { ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING};
 
 public class FlippableCard : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
-    public KlondikeSolitaire klondikeSolitaire;
-
-    public SUIT suit=SUIT.Spades;
-    public NUMBER number=NUMBER.ACE;
+    //public SUIT suit=SUIT.Spades;
+    //public NUMBER number=NUMBER.ACE;
+    public int suit;
+    public int number;
 
     public bool isInAce=false;
 
@@ -37,12 +37,11 @@ public class FlippableCard : MonoBehaviour, IPointerDownHandler, IBeginDragHandl
         baseLocations = GameObject.Find("BaseLocations").transform;
 
         image = GetComponent<Image>();
-        backImage = Resources.Load<Sprite>("Images/SolitaireCards/CardBack");
-        frontImage = Resources.Load<Sprite>("Images/SolitaireCards/" + suit + "/" + GetNumberAsChar() + (char)suit);
+        
+        backImage = SettingsManager.instance.GetCardBack();//Resources.Load<Sprite>("Images/SolitaireCards/CardBack");
+        frontImage = SettingsManager.instance.GetCardFront(suit, number);//Resources.Load<Sprite>("Images/SolitaireCards/" + suit + "/" + GetNumberAsChar() + (char)suit);
 
         image.sprite = isBack ? backImage : frontImage;
-
-        klondikeSolitaire = FindObjectOfType<KlondikeSolitaire>();
 
         canvas = GameObject.Find("GameViewMainCanvas").GetComponent<Canvas>();
         canvasGroup = GetComponent<CanvasGroup>();
@@ -73,11 +72,6 @@ public class FlippableCard : MonoBehaviour, IPointerDownHandler, IBeginDragHandl
             }
         }
 
-        if (klondikeSolitaire == null)
-        {
-            klondikeSolitaire = FindObjectOfType<KlondikeSolitaire>();
-        }
-
         if (baseLocations == null)
         {
             baseLocations = GameObject.Find("BaseLocations").transform;
@@ -101,11 +95,6 @@ public class FlippableCard : MonoBehaviour, IPointerDownHandler, IBeginDragHandl
             }
         }
 
-        if (klondikeSolitaire == null)
-        {
-            klondikeSolitaire = FindObjectOfType<KlondikeSolitaire>();
-        }
-
         if (baseLocations == null)
         {
             baseLocations = GameObject.Find("BaseLocations").transform;
@@ -118,42 +107,7 @@ public class FlippableCard : MonoBehaviour, IPointerDownHandler, IBeginDragHandl
     {
         image.sprite = isBack ? frontImage : backImage;
         isBack = !isBack;
-        klondikeSolitaire.PlayFlipSound();
-    }
-
-    public char GetNumberAsChar()
-    {
-        switch (number)
-        {
-            case NUMBER.ACE:
-                return 'A';
-            case NUMBER.TWO:
-                return '2';
-            case NUMBER.THREE:
-                return '3';
-            case NUMBER.FOUR:
-                return '4';
-            case NUMBER.FIVE:
-                return '5';
-            case NUMBER.SIX:
-                return '6';
-            case NUMBER.SEVEN:
-                return '7';
-            case NUMBER.EIGHT:
-                return '8';
-            case NUMBER.NINE:
-                return '9';
-            case NUMBER.TEN:
-                return 'X';
-            case NUMBER.JACK:
-                return 'J';
-            case NUMBER.QUEEN:
-                return 'Q';
-            case NUMBER.KING:
-                return 'K';
-        }
-
-        throw new System.Exception("Invalid enum NUMBER found. number: "+number);
+        SettingsManager.instance.PlayFlipSound();
     }
 
     /**
@@ -161,21 +115,21 @@ public class FlippableCard : MonoBehaviour, IPointerDownHandler, IBeginDragHandl
      */
     public void OnPointerDown(PointerEventData eventData)
     {
-        if((isBack || !SettingsManager.instance.IsGameActive() || (isDraw && transform.childCount>0) || (klondikeSolitaire.lastClickedFlippableCard!=null && transform.childCount>0)) || !SettingsManager.instance.CanMoveCard()) return; 
+        if((isBack || !SettingsManager.instance.IsGameActive() || (isDraw && transform.childCount>0) || (KlondikeSolitaire.instance.lastClickedFlippableCard!=null && transform.childCount>0)) || !SettingsManager.instance.CanMoveCard()) return;
 
-        klondikeSolitaire.PlayClickSound();
+        SettingsManager.instance.PlayClickSound();
 
         returnPos = transform.localPosition;
 
-        if (klondikeSolitaire.lastClickedFlippableCard != this)
+        if (KlondikeSolitaire.instance.lastClickedFlippableCard != this)
         {
             //set as clicked
-            if (klondikeSolitaire.lastClickedFlippableCard == null)
+            if (KlondikeSolitaire.instance.lastClickedFlippableCard == null)
             {
                 if (isDraw && transform.childCount > 0) return;
 
                 //save this card
-                klondikeSolitaire.lastClickedFlippableCard = this;
+                KlondikeSolitaire.instance.lastClickedFlippableCard = this;
                 tempParent = this.transform.parent;
 
                 //get the outline and turn up the alpha
@@ -184,10 +138,10 @@ public class FlippableCard : MonoBehaviour, IPointerDownHandler, IBeginDragHandl
             else
             {
                 //see if it is the next or previous card
-                TryToPlace(klondikeSolitaire.lastClickedFlippableCard);
+                TryToPlace(KlondikeSolitaire.instance.lastClickedFlippableCard);
 
                 //set back to null
-                klondikeSolitaire.NullifyLastClicked();
+                KlondikeSolitaire.instance.NullifyLastClicked();
             }
         }
     }
@@ -206,7 +160,7 @@ public class FlippableCard : MonoBehaviour, IPointerDownHandler, IBeginDragHandl
 
             transform.SetParent(baseLocations.transform.parent);
 
-            klondikeSolitaire.draggingCard = this;
+            KlondikeSolitaire.instance.draggingCard = this;
         }
     }
 
@@ -225,13 +179,13 @@ public class FlippableCard : MonoBehaviour, IPointerDownHandler, IBeginDragHandl
             ;
 
             //find all columns that match this
-            foreach(GameObject location in klondikeSolitaire.sevenLocations.Concat(klondikeSolitaire.fourLocations))
+            foreach(GameObject location in KlondikeSolitaire.instance.sevenLocations.Concat(KlondikeSolitaire.instance.fourLocations))
             {
                 //if we found a match, check y position of bottom element
                 if (location.transform.position.x>minX && location.transform.position.x < maxX)
                 {
                     //get the bottom child
-                    GameObject locBottomChild = klondikeSolitaire.GetLastChild(location);
+                    GameObject locBottomChild = KlondikeSolitaire.instance.GetLastChild(location);
 
                     //check if y pos match
                     if(locBottomChild.transform.position.y>minY && locBottomChild.transform.position.y < maxY)
@@ -282,12 +236,12 @@ public class FlippableCard : MonoBehaviour, IPointerDownHandler, IBeginDragHandl
      */
     public bool TryToPlace(FlippableCard flippableCards)
     {
-        klondikeSolitaire.NullifyLastClicked();
-        klondikeSolitaire.LabelAllCards();
+        KlondikeSolitaire.instance.NullifyLastClicked();
+        KlondikeSolitaire.instance.LabelAllCards();
 
         if (flippableCards == null || (flippableCards.isDraw && flippableCards.transform.childCount>0) || isDraw || transform.childCount>0) return false;
 
-        if(flippableCards.isDraw) klondikeSolitaire.drawController.ResetDeckThree();
+        if(flippableCards.isDraw) DrawController.instance.ResetDeckThree();
 
         //get the outline and turn up the alpha
         ToggleColumnOutlineAlpha(flippableCards.transform, false);
@@ -308,7 +262,7 @@ public class FlippableCard : MonoBehaviour, IPointerDownHandler, IBeginDragHandl
             else
             {
                 flippableCards.isInAce = true;
-                klondikeSolitaire.PlayMovedToAce();
+                SettingsManager.instance.PlayCheersSound();
             }
         }
         else
@@ -339,7 +293,7 @@ public class FlippableCard : MonoBehaviour, IPointerDownHandler, IBeginDragHandl
 
         if (!isInAce)
         {
-            pos.y -= klondikeSolitaire.CARD_PLACEMENT_DIFFERENCE;
+            pos.y -= KlondikeSolitaire.instance.CARD_PLACEMENT_DIFFERENCE;
         }
 
         //flippableCards.transform.position = pos;
@@ -354,232 +308,49 @@ public class FlippableCard : MonoBehaviour, IPointerDownHandler, IBeginDragHandl
         {
             flippableCards.isDraw = false;
 
-            klondikeSolitaire.drawController.ResetDeckThree();
+            DrawController.instance.ResetDeckThree();
         }
 
-        klondikeSolitaire.CheckVictory();
-        klondikeSolitaire.AddHistory(flippableCards.gameObject, lastParent.gameObject, lastLocalPosition, false, flipParent);
+        KlondikeSolitaire.instance.CheckVictory();
+        KlondikeSolitaire.instance.AddHistory(flippableCards.gameObject, lastParent.gameObject, lastLocalPosition, false, flipParent);
         return true;
     }
 
-    private bool IsPrevCard(NUMBER number)
+    private bool IsPrevCard(int number)
     {
-        switch (this.number)
-        {
-            case NUMBER.ACE:
-                return false;
-            case NUMBER.TWO:
-                if (number == NUMBER.ACE)
-                {
-                    return true;
-                }
-                return false;
-            case NUMBER.THREE:
-                if (number == NUMBER.TWO)
-                {
-                    return true;
-                }
-                return false;
-            case NUMBER.FOUR:
-                if (number == NUMBER.THREE)
-                {
-                    return true;
-                }
-                return false;
-            case NUMBER.FIVE:
-                if (number == NUMBER.FOUR)
-                {
-                    return true;
-                }
-                return false;
-            case NUMBER.SIX:
-                if (number == NUMBER.FIVE)
-                {
-                    return true;
-                }
-                return false;
-            case NUMBER.SEVEN:
-                if (number == NUMBER.SIX)
-                {
-                    return true;
-                }
-                return false;
-            case NUMBER.EIGHT:
-                if (number == NUMBER.SEVEN)
-                {
-                    return true;
-                }
-                return false;
-            case NUMBER.NINE:
-                if (number == NUMBER.EIGHT)
-                {
-                    return true;
-                }
-                return false;
-            case NUMBER.TEN:
-                if (number == NUMBER.NINE)
-                {
-                    return true;
-                }
-                return false;
-            case NUMBER.JACK:
-                if (number == NUMBER.TEN)
-                {
-                    return true;
-                }
-                return false;
-            case NUMBER.QUEEN:
-                if (number == NUMBER.JACK)
-                {
-                    return true;
-                }
-                return false;
-            case NUMBER.KING:
-                if (number == NUMBER.QUEEN)
-                {
-                    return true;
-                }
-                return false;
-        }
+        if (this.number == 0) return false;
 
-        Debug.LogError("NUMBER not found: " + this.number);
-        return false;
+        return this.number - 1 == number;
     }
 
-    private bool IsNextCard(NUMBER number)
+    private bool IsNextCard(int number)
     {
-        switch (this.number)
-        {
-            case NUMBER.ACE:
-                if (number == NUMBER.TWO)
-                {
-                    return true;
-                }
-                return false;
-            case NUMBER.TWO:
-                if (number == NUMBER.THREE)
-                {
-                    return true;
-                }
-                return false;
-            case NUMBER.THREE:
-                if (number == NUMBER.FOUR)
-                {
-                    return true;
-                }
-                return false;
-            case NUMBER.FOUR:
-                if (number == NUMBER.FIVE)
-                {
-                    return true;
-                }
-                return false;
-            case NUMBER.FIVE:
-                if (number == NUMBER.SIX)
-                {
-                    return true;
-                }
-                return false;
-            case NUMBER.SIX:
-                if (number == NUMBER.SEVEN)
-                {
-                    return true;
-                }
-                return false;
-            case NUMBER.SEVEN:
-                if (number == NUMBER.EIGHT)
-                {
-                    return true;
-                }
-                return false;
-            case NUMBER.EIGHT:
-                if (number == NUMBER.NINE)
-                {
-                    return true;
-                }
-                return false;
-            case NUMBER.NINE:
-                if (number == NUMBER.TEN)
-                {
-                    return true;
-                }
-                return false;
-            case NUMBER.TEN:
-                if (number == NUMBER.JACK)
-                {
-                    return true;
-                }
-                return false;
-            case NUMBER.JACK:
-                if (number == NUMBER.QUEEN)
-                {
-                    return true;
-                }
-                return false;
-            case NUMBER.QUEEN:
-                if (number == NUMBER.KING)
-                {
-                    return true;
-                }
-                return false;
-            case NUMBER.KING:
-                return false;
-        }
+        if (this.number > 11) return false;
 
-        Debug.LogError("NUMBER not found: " + this.number);
-        return false;
+        return this.number + 1 == number;
     }
 
-    public NUMBER GetNextCard()
+    public int GetNextCard()
     {
-        switch (number)
-        {
-            case NUMBER.ACE:
-                return NUMBER.TWO;
-            case NUMBER.TWO:
-                return NUMBER.THREE;
-            case NUMBER.THREE:
-                return NUMBER.FOUR;
-            case NUMBER.FOUR:
-                return NUMBER.FIVE;
-            case NUMBER.FIVE:
-                return NUMBER.SIX;
-            case NUMBER.SIX:
-                return NUMBER.SEVEN;
-            case NUMBER.SEVEN:
-                return NUMBER.EIGHT;
-            case NUMBER.EIGHT:
-                return NUMBER.NINE;
-            case NUMBER.NINE:
-                return NUMBER.TEN;
-            case NUMBER.TEN:
-                return NUMBER.JACK;
-            case NUMBER.JACK:
-                return NUMBER.QUEEN;
-            case NUMBER.QUEEN:
-                return NUMBER.KING;
-            case NUMBER.KING:
-                return NUMBER.ACE;
-        }
+        if (number > 11) return 0;
 
-        Debug.LogError("NUMBER not found: " + this.number);
-        return NUMBER.ACE;
+        return number + 1;
     }
 
     public bool HasOppositeCard(FlippableCard parent)
     {
         switch (parent.suit)
         {
-            case SUIT.Clubs:
-            case SUIT.Spades:
-                if (suit==SUIT.Diamonds|| suit == SUIT.Hearts)
+            case 0:
+            case 1:
+                if (suit==2|| suit == 3)
                 {
                     return true;
                 }
                 break;
-            case SUIT.Diamonds:
-            case SUIT.Hearts:
-                if (suit == SUIT.Clubs|| suit == SUIT.Spades)
+            case 2:
+            case 3:
+                if (suit == 0|| suit == 1)
                 {
                     return true;
                 }

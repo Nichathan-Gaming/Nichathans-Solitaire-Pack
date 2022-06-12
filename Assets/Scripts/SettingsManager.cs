@@ -116,6 +116,11 @@ public class SettingsManager : MonoBehaviour
 
     bool isResetOnAdvancedClose = false;
 
+    [SerializeField] int activeBack=0;
+    [SerializeField] Sprite[] backs;
+    [SerializeField] int activeDeck = 0;
+    [SerializeField] DeckFront[] deckFronts;
+
     private void Awake()
     {
         if (instance == null)
@@ -145,6 +150,21 @@ public class SettingsManager : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public Sprite GetCardBack()
+    {
+        return backs[activeBack];
+    }
+
+    public DeckFront GetDeckFront()
+    {
+        return deckFronts[activeDeck];
+    }
+
+    public Sprite GetCardFront(int suit, int number)
+    {
+        return deckFronts[activeDeck].deck[suit].cards[number];
     }
 
     public void CloseAdvancedSettings()

@@ -44,7 +44,7 @@ public class KlondikeDrop : MonoBehaviour, IDropHandler, IPointerDownHandler
         if (allowsAceOrKing)
         {
             //check if this card is Ace
-            if (flippableCards.number != NUMBER.ACE)
+            if (flippableCards.number != 0)
             {
                 return false;
             }
@@ -56,7 +56,7 @@ public class KlondikeDrop : MonoBehaviour, IDropHandler, IPointerDownHandler
         else
         {
             //check if this card is King
-            if (flippableCards.number != NUMBER.KING)
+            if (flippableCards.number != 12)
             {
                 return false;
             }
@@ -88,7 +88,7 @@ public class KlondikeDrop : MonoBehaviour, IDropHandler, IPointerDownHandler
         {
             flippableCards.isDraw = false;
 
-            klondikeSolitaire.drawController.ResetDeckThree();
+            DrawController.instance.ResetDeckThree();
         }
 
         flippableCards.gameObject.GetComponent<CanvasGroup>().blocksRaycasts = true;

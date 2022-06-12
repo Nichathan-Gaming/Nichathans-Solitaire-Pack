@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class KlondikeSolitaire : MonoBehaviour
 {
+    public static KlondikeSolitaire instance;
+
     //STATIC VARIABLES
     private const string FASTEST_TIME_PREFS= "KlondikeSolitaireFastestTime",
         LEAST_MOVES_PREFS= "KlondikeSolitaireLeastMoves"
@@ -37,18 +39,23 @@ public class KlondikeSolitaire : MonoBehaviour
     [Header("This is the base that cards are created with")]
     [SerializeField] GameObject cardPrefab;
 
-    [Header("Do not assign in inspector")]
-    //Helps with onEndDrag raycasting
+    [Header("Helps with onEndDrag raycasting")]
     [SerializeField] GraphicRaycaster graphicRaycaster;
 
+    [Header("Places cards from deck to here on draw")]
+    public GameObject drawnCardHolder;
+
+    [Header("Our stopwatch object used to track the time")]
+    [SerializeField] private StopWatch stopWatch;
+
+    [SerializeField] Image drawDeck;
+
+    [Header("Do not assign in inspector")]
     public FlippableCard lastClickedFlippableCard = null;
 
     public FlippableCard draggingCard;
 
-    public DrawController drawController;
-
-    //Places cards from deck to here on draw
-    public GameObject drawnCardHolder;
+    //public DrawController drawController;
 
     //displays the refreshes left
     public Text deckRefreshText;
@@ -60,27 +67,32 @@ public class KlondikeSolitaire : MonoBehaviour
     //track the click history
     private Stack<History> histories = new Stack<History>();
 
-    //Our stopwatch object used to track the time
-    private StopWatch stopWatch;
-
     //The text to show players their scores
     [SerializeField] Text timerText;
     [SerializeField] Text movesText;
     #endregion private variables
 
     #region Unity Default Override
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this; // In first scene, make us the singleton.
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (instance != this)
+        {
+            Destroy(instance.gameObject); // On reload, singleton already set, so destroy duplicate.
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+    }
+
     private void Start()
     {
-        drawController = gameObject.AddComponent<DrawController>();
-        drawController.klondikeSolitaire = this;
+        drawDeck.sprite = SettingsManager.instance.GetCardBack();
 
-        drawCard = drawController.Draw;
-
-        graphicRaycaster = GameObject.Find("GameViewMainCanvas").GetComponent<GraphicRaycaster>();
-
-        drawnCardHolder = GameObject.Find("DrawnCardHolder");
-
-        stopWatch = transform.GetComponent<StopWatch>();
+        drawCard = DrawController.instance.Draw;
 
         SettingsManager.RESET = ResetGame;
         SettingsManager.UNDO = Undo;
@@ -104,6 +116,7 @@ public class KlondikeSolitaire : MonoBehaviour
 
             //Raycast using the Graphics Raycaster and mouse click position
             pointerData.position = Input.mousePosition;
+            if (graphicRaycaster == null) graphicRaycaster = FindObjectOfType<GraphicRaycaster>();
             graphicRaycaster.Raycast(pointerData, results);
 
             //For every result returned, output the name of the GameObject on the Canvas hit by the Ray
@@ -166,23 +179,8 @@ public class KlondikeSolitaire : MonoBehaviour
 
                 FlippableCard flippableCards = newCard.GetComponent<FlippableCard>();
 
-                flippableCards.number = (NUMBER)j;
-                switch (i)
-                {
-                    case 0:
-                        flippableCards.suit = SUIT.Hearts;
-                        break;
-                    case 1:
-                        flippableCards.suit = SUIT.Diamonds;
-                        break;
-                    case 2:
-                        flippableCards.suit = SUIT.Spades;
-                        break;
-                    case 3:
-                    default:
-                        flippableCards.suit = SUIT.Clubs;
-                        break;
-                }
+                flippableCards.number = j;
+                flippableCards.suit = i;
             }
         }
 
@@ -383,21 +381,21 @@ public class KlondikeSolitaire : MonoBehaviour
                 if (fourLocLastChildFlip == null) continue;
 
                 //get the next card
-                NUMBER nextNumber = fourLocLastChildFlip.GetNextCard();
-                if (nextNumber == NUMBER.ACE) continue;
+                int nextNumber = fourLocLastChildFlip.GetNextCard();
+                if (nextNumber == 0) continue;
 
                 //search drawnDeckHolder for this number
                 SearchForNumber(fourLocationsParent, nextNumber, fourLocLastChildFlip.suit);
             }
             else
             {
-                if(!SearchForNumber(fourLocationsParent, NUMBER.ACE, SUIT.Clubs))
+                if(!SearchForNumber(fourLocationsParent, 0, 1))
                 {
-                    if(!SearchForNumber(fourLocationsParent, NUMBER.ACE, SUIT.Spades))
+                    if(!SearchForNumber(fourLocationsParent, 0, 0))
                     {
-                        if (!SearchForNumber(fourLocationsParent, NUMBER.ACE, SUIT.Hearts))
+                        if (!SearchForNumber(fourLocationsParent, 0, 2))
                         {
-                            if (!SearchForNumber(fourLocationsParent, NUMBER.ACE, SUIT.Diamonds))
+                            if (!SearchForNumber(fourLocationsParent, 0, 3))
                             {
                                 continue;
                             }
@@ -412,7 +410,7 @@ public class KlondikeSolitaire : MonoBehaviour
     /**
      * Searches the object for a number and suit
      */
-    private bool SearchForNumber(Transform fourLocationsParent, NUMBER number, SUIT suit)
+    private bool SearchForNumber(Transform fourLocationsParent, int number, int suit)
     {
         //find any Ace in drawnCardHolder or sevenLocations
         if (drawnCardHolder.transform.childCount > 0)
@@ -433,11 +431,11 @@ public class KlondikeSolitaire : MonoBehaviour
                 flippableCard.MoveTo(Vector3.zero);
                 flippableCard.isInAce = true;
 
-                if(SettingsManager.instance.IsDrawThree()) drawController.ResetDeckThree();
+                if(SettingsManager.instance.IsDrawThree()) DrawController.instance.ResetDeckThree();
 
                 //match found, reset
                 SearchForCompletion();
-                PlayMovedToAce();
+                SettingsManager.instance.PlayCheersSound();
 
                 CheckVictory();
 
@@ -478,7 +476,7 @@ public class KlondikeSolitaire : MonoBehaviour
 
                     //match found, reset
                     SearchForCompletion();
-                    PlayMovedToAce();
+                    SettingsManager.instance.PlayCheersSound();
 
                     CheckVictory();
                     return true;
@@ -527,7 +525,7 @@ public class KlondikeSolitaire : MonoBehaviour
             {
                 //see if there are subsequent children from ACE to KING
                 FlippableCard lastChild = GetLastChild(fourLocations[i]).GetComponent<FlippableCard>();
-                if (lastChild == null || lastChild.number != NUMBER.KING)
+                if (lastChild == null || lastChild.number != 12)
                 {
                     return;
                 }
@@ -711,32 +709,32 @@ public class KlondikeSolitaire : MonoBehaviour
         }
     }
 
-    #region Sound Section
-    public void PlayDealSound()
-    {
-        SettingsManager.instance.PlayDealSound();
-    }
+    //#region Sound Section
+    //public void PlayDealSound()
+    //{
+    //    SettingsManager.instance.PlayDealSound();
+    //}
 
-    public void PlayVictoryCheerSound()
-    {
-        SettingsManager.instance.PlayVictoryCheerSound();
-    }
+    //public void PlayVictoryCheerSound()
+    //{
+    //    SettingsManager.instance.PlayVictoryCheerSound();
+    //}
 
-    public void PlayClickSound()
-    {
-        SettingsManager.instance.PlayClickSound();
-    }
+    //public void PlayClickSound()
+    //{
+    //    SettingsManager.instance.PlayClickSound();
+    //}
 
-    public void PlayFlipSound()
-    {
-        SettingsManager.instance.PlayFlipSound();
-    }
+    //public void PlayFlipSound()
+    //{
+    //    SettingsManager.instance.PlayFlipSound();
+    //}
 
-    public void PlayMovedToAce()
-    {
-        SettingsManager.instance.PlayCheersSound();
-    }
-    #endregion Sound Section
+    //public void PlayMovedToAce()
+    //{
+    //    SettingsManager.instance.PlayCheersSound();
+    //}
+    //#endregion Sound Section
 
     #region history
     /**
@@ -833,7 +831,7 @@ public class KlondikeSolitaire : MonoBehaviour
                 history = histories.Pop();
             }
 
-            drawController.ResetDeckThree();
+            DrawController.instance.ResetDeckThree();
         }
         else
         {
