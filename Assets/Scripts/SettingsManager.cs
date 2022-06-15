@@ -438,6 +438,11 @@ public class SettingsManager : MonoBehaviour
         SceneManager.LoadScene("Credits");
     }
 
+    public void ChangeCards()
+    {
+        SceneManager.LoadScene("ChangeCards");
+    }
+
     /**
      * Attempts to load the scene with sceneName
      */
