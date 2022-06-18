@@ -146,12 +146,6 @@ public class SettingsManager : MonoBehaviour
         //if (hasMusic && !gameMusic.isPlaying) gameMusic.Play();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public Sprite GetCardBack()
     {
         return backs[activeBack];
