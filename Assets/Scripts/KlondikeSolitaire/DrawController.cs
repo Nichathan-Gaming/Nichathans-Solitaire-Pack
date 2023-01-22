@@ -15,17 +15,7 @@ public class DrawController : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this; // In first scene, make us the singleton.
-            DontDestroyOnLoad(gameObject);
-        }
-        else if (instance != this)
-        {
-            Destroy(instance.gameObject); // On reload, singleton already set, so destroy duplicate.
-            instance = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
+        instance = this;
     }
 
     // Start is called before the first frame update

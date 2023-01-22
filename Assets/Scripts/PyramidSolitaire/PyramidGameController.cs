@@ -940,6 +940,7 @@ public class PyramidGameController : MonoBehaviour
         //If there is history to undo, undo the last history
         if (historiesList.Count > 0) historiesList.Pop().Undo();
 
+        HandleUndo();
         return true;
     }
 

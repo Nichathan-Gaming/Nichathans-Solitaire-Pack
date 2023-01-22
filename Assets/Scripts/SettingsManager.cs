@@ -121,6 +121,8 @@ public class SettingsManager : MonoBehaviour
     public static int activeDeck = 0;
     [SerializeField] DeckFront[] deckFronts;
 
+    [SerializeField] GameObject mainMenuBackgroundImage;
+
     private void Awake()
     {
         if (instance == null)
@@ -130,9 +132,9 @@ public class SettingsManager : MonoBehaviour
         }
         else if (instance != this)
         {
-            Destroy(instance.gameObject); // On reload, singleton already set, so destroy duplicate.
-            instance = this;
-            DontDestroyOnLoad(this.gameObject);
+            Destroy(gameObject); // On reload, singleton already set, so destroy duplicate.
+            //instance = this;
+            //DontDestroyOnLoad(this.gameObject);
         }
 
         SetVariables();
@@ -143,7 +145,7 @@ public class SettingsManager : MonoBehaviour
     {
         Screen.SetResolution(1920, 1080, true);
 
-        //if (hasMusic && !gameMusic.isPlaying) gameMusic.Play();
+        if (hasMusic && !gameMusic.isPlaying) gameMusic.Play();
     }
 
     public Sprite GetCardBack()
@@ -441,11 +443,13 @@ public class SettingsManager : MonoBehaviour
 
     public void ViewCredits()
     {
+        mainMenuBackgroundImage.SetActive(false);
         SceneManager.LoadScene("Credits");
     }
 
     public void ChangeCards()
     {
+        mainMenuBackgroundImage.SetActive(false);
         SceneManager.LoadScene("ChangeCards");
     }
 
@@ -454,6 +458,17 @@ public class SettingsManager : MonoBehaviour
      */
     public void LoadScene(string sceneName)
     {
+        foreach(RisingScore risingScore in risingObjects)
+        {
+            Destroy(risingScore.gameObject);
+        }
+        risingObjects.Clear();
+
+        mainMenuBackgroundImage.SetActive(sceneName.Equals("MainMenuScene"));
+        mainSettings.SetActive(false);
+        blackWarSettings.SetActive(false);
+        victoryScreen.SetActive(false);
+
         extraSettingsButtons[0].SetActive(false);
         extraSettingsButtons[1].SetActive(false);
 
@@ -620,7 +635,7 @@ public class SettingsManager : MonoBehaviour
 
         if (hasMusic)
         {
-            //gameMusic.Play();
+            gameMusic.Play();
         }
         else
         {
@@ -916,7 +931,7 @@ public class SettingsManager : MonoBehaviour
     {
         if (hasSound)
         {
-            //dealSound.Play();
+            dealSound.Play();
         }
     }
 
@@ -924,7 +939,7 @@ public class SettingsManager : MonoBehaviour
     {
         if (hasSound)
         {
-            //victorySound.Play();
+            victorySound.Play();
         }
     }
 
@@ -932,7 +947,7 @@ public class SettingsManager : MonoBehaviour
     {
         if (hasSound)
         {
-            //clickSound.Play();
+            clickSound.Play();
         }
     }
 
@@ -940,7 +955,7 @@ public class SettingsManager : MonoBehaviour
     {
         if (hasSound)
         {
-            //flipSound.Play();
+            flipSound.Play();
         }
     }
 
@@ -948,7 +963,7 @@ public class SettingsManager : MonoBehaviour
     {
         if (hasSound)
         {
-            //cheersSound.Play();
+            cheersSound.Play();
         }
     }
     #endregion Sound Section

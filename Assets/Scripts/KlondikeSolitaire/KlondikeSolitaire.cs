@@ -75,17 +75,18 @@ public class KlondikeSolitaire : MonoBehaviour
     #region Unity Default Override
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this; // In first scene, make us the singleton.
-            DontDestroyOnLoad(gameObject);
-        }
-        else if (instance != this)
-        {
-            Destroy(instance.gameObject); // On reload, singleton already set, so destroy duplicate.
-            instance = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
+        instance = this;
+        //if (instance == null)
+        //{
+        //    instance = this; // In first scene, make us the singleton.
+        //    DontDestroyOnLoad(gameObject);
+        //}
+        //else if (instance != this)
+        //{
+        //    Destroy(instance.gameObject); // On reload, singleton already set, so destroy duplicate.
+        //    instance = this;
+        //    DontDestroyOnLoad(this.gameObject);
+        //}
     }
 
     private void Start()

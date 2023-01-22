@@ -7,7 +7,7 @@ public class Credits : MonoBehaviour
 {
     public void Back()
     {
-        SceneManager.LoadScene("MainMenuScene");
+        SettingsManager.instance.LoadScene("MainMenuScene");
     }
 
     public void OpenItch()
@@ -20,8 +20,13 @@ public class Credits : MonoBehaviour
         Application.OpenURL("https://github.com/Nichathan-Gaming/Nichathans-Solitaire-Pack");
     }
 
+    public void OpenGooglePlay()
+    {
+        Application.OpenURL("https://play.google.com/store/apps/dev?id=5505294983591200024");
+    }
+
     public void OpenGmail()
     {
-        Application.OpenURL("mailto:nichathannichols@gmail.com");
+        Application.OpenURL("mailto:JNichols@NichathanGaming.com");
     }
 }

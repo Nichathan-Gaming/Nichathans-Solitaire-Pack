@@ -71,7 +71,7 @@ public class StopWatch : MonoBehaviour
 
         PauseStopWatch();
     }
-    
+
     /**
      * A basic timer that also calls a function during FixedUpdate
      */

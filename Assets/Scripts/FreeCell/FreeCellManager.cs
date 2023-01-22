@@ -62,15 +62,7 @@ public class FreeCellManager : MonoBehaviour
 
     void Awake()
     {
-        if (instance == null)
-        {
-            instance = this; // In first scene, make us the singleton.
-        }
-        else if (instance != this)
-        {
-            Destroy(instance.gameObject); // On reload, singleton already set, so destroy duplicate.
-            instance = this;
-        }
+        instance = this;
 
         // Get both of the components we need to do this
         raycaster = GetComponent<GraphicRaycaster>();

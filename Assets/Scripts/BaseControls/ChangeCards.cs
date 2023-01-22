@@ -74,7 +74,7 @@ public class ChangeCards : MonoBehaviour
 
     public void BackToMain()
     {
-        SceneManager.LoadScene("MainMenuScene");
+        SettingsManager.instance.LoadScene("MainMenuScene");
     }
 
     public void ClickCard(int index, bool frontOrBack)
